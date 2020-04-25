@@ -1,6 +1,13 @@
 'use stript'
-document.getElementById('form').onsubmit = function(event) {
-	event.preventDefault();
-	const search = document.getElementById('form').word.value;
-	document.getElementById('output').textContent = `「${search}」の検索中...`;
-};
+function success(pos) {
+	const lat = pos.coords.latitude;
+	const lng = pos.coords.longitude;
+	const accuracy = pos.coords.accuracy;
+
+	$('#loc').text(`緯度:${lat} 経度:${lng}`);
+	$('#accuracy').text(accuracy);
+}
+function fail(error) {
+	alert('位置情報の習得に失敗しました。エラーコード:' + error.code)
+}
+navigator.geolocation.getCurrentPosition(success, fail);
